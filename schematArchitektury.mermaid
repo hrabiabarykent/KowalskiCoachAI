@@ -1,0 +1,48 @@
+graph TD
+    subgraph "CLIENT LAYER (Mobile)"
+        MobileApp["📱 Mobile App (React Native / Expo / TypeScript)"]
+        TimelineModule["📆 Microcycle Timeline & TSS Progress Module"]
+        ChartModule["📊 Power & HR Zone Visualization (SVG)"]
+        AsyncStorage["📂 AsyncStorage (Local Config & Session)"]
+    end
+
+    subgraph "BACKEND SERVICE (FastAPI / Python 3.13)"
+        API["🚀 API Gateway (FastAPI + Routers)"]
+        MicrocycleEngine["🗓️ Microcycle Allocator & Service (Joe Friel Periodization)"]
+        Orchestrator["⚙️ Multi-Agent Orchestrator (DAG Workflow)"]
+        Guardrails["🛡️ Deterministic Guardrails (HRV Baseline, RHR, TSB, Decoupling)"]
+        Compiler["📐 Intervals DSL Compiler (Pydantic -> Intervals Syntax)"]
+        Telemetry["📈 LLM Telemetry Logger (JSONL Latency/Token Trace)"]
+    end
+
+    subgraph "AI AGENT GRAPH (Google Gemini)"
+        Analyst["🔬 Physiology Analyst (Calculates hard physiological boundaries)"]
+        Planner["📋 Workout Planner (Designs structured workout within week context)"]
+        Critic["⚖️ Critic Guardrail (Audits constraints & manages feedback loop)"]
+    end
+
+    subgraph "DATA & EXTERNAL INTEGRATIONS"
+        IntervalsAPI["☁️ Intervals.icu REST API (Activities, Wellness, Calendar)"]
+        DB[("🗄️ Database (SQLite / PostgreSQL)")]
+    end
+
+    %% Connections
+    MobileApp <--> AsyncStorage
+    MobileApp --> TimelineModule
+    MobileApp --> ChartModule
+    MobileApp <-->|REST / JSON| API
+
+    API <--> MicrocycleEngine
+    API <--> Orchestrator
+    MicrocycleEngine <-->|Push Workouts| IntervalsAPI
+    Orchestrator <-->|HTTPX Async| IntervalsAPI
+    Orchestrator <-->|SQLAlchemy ORM| DB
+    Orchestrator -->|Data Verification| Guardrails
+    Orchestrator --> Compiler
+    Orchestrator --> Telemetry
+
+    %% Multi-agent Loop
+    Orchestrator --> Analyst
+    Analyst --> Planner
+    Planner <-->|Review & Refinement Loop| Critic
+    Critic -->|Approved Plan| Orchestrator

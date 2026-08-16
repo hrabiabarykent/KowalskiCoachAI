@@ -1,0 +1,50 @@
+# Pliki / Foldery Node.js & Expo
+node_modules/
+/mobile/node_modules/
+/mobile/npm-debug.log
+.expo/
+mobile/.expo/
+/mobile/.env
+
+# Środowisko wirtualne Python
+venv/
+/backend/venv/
+.venv/
+
+# Baza danych lokalna i SQLite
+*.db
+*.sqlite
+*.sqlite3
+/backend/local_database.db
+/backend/users.db
+
+# KLUCZE API I ZMIENNE ŚRODOWISKOWE - ABSOLUTNIE NAJWAŻNIEJSZE!
+*.env
+.env
+/backend/.env 
+/mobile/.env
+
+# Pliki środowisk IDE / OS
+.DS_Store
+Thumbs.db
+*.code-workspace
+.idea/
+.vscode/
+
+# Ignorowanie logów, zrzutów json i plików roboczych
+*.log
+logs/
+/logs/
+/backend/logs/
+athlete_snapshot*.json
+*sota_result*.json
+debug_workouts.json
+backend/output*.txt
+output*.txt
+
+# Python Cache & Pytest
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
